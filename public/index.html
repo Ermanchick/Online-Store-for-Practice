@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechStore</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <a href="/" class="logo"><div class="logo-icon">⚡</div>TechStore</a>
+            <nav class="nav">
+                <a href="/">Главная</a>
+                <a href="/products">Каталог</a>
+                <a href="/cart">🛒 <span id="cart-count">0</span></a>
+                <div id="user-menu"><a href="/login" class="btn-login">Войти</a></div>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <section class="hero">
+            <h1>Будущее технологий — уже здесь</h1>
+            <p>Новейшая электроника с гарантией и доставкой</p>
+            <a href="/products" class="btn btn-primary">Смотреть каталог</a>
+        </section>
+        <section class="features">
+            <div class="container">
+                <div><div>🚚</div><h3>Доставка</h3><p>Бесплатно от 10к</p></div>
+                <div><div>🛡️</div><h3>Гарантия</h3><p>Официальная</p></div>
+                <div><div>💳</div><h3>Оплата</h3><p>Частями</p></div>
+                <div><div>🔄</div><h3>Возврат</h3><p>14 дней</p></div>
+            </div>
+        </section>
+        <section class="products">
+            <div class="container">
+                <h2>Популярные товары</h2>
+                <div class="grid" id="featured-products"></div>
+            </div>
+        </section>
+    </main>
+    <footer class="footer">
+        <div class="container">
+            <p>© 2026 TechStore</p>
+        </div>
+    </footer>
+    <div class="modal" id="product-modal">
+        <div class="modal-content">
+            <button class="close" id="product-modal-close">&times;</button>
+            <img id="modal-image">
+            <div>
+                <div id="modal-category"></div>
+                <h2 id="modal-name"></h2>
+                <div id="modal-price"></div>
+                <p id="modal-description"></p>
+                <button class="btn btn-primary" id="modal-add-btn">В корзину</button>
+            </div>
+        </div>
+    </div>
+    <script src="/js/main.js"></script>
+</body>
+</html>

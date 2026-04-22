@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход - TechStore</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <a href="/" class="logo"><div class="logo-icon">⚡</div>TechStore</a>
+            <nav class="nav">
+                <a href="/">Главная</a>
+                <a href="/products">Каталог</a>
+                <a href="/cart">🛒</a>
+            </nav>
+        </div>
+    </header>
+    <main class="auth">
+        <div class="auth-card">
+            <div id="user-info" style="display:none">
+                <div class="avatar">👤</div>
+                <h2 id="user-name"></h2>
+                <p id="user-email"></p>
+                <p id="user-role"></p>
+                <a href="/admin" class="btn btn-primary" id="admin-link" style="display:none">Админ-панель</a>
+                <button class="btn btn-outline" id="logout-btn">Выйти</button>
+            </div>
+            <div id="auth-forms">
+                <div class="tabs">
+                    <button class="active" data-tab="login">Вход</button>
+                    <button data-tab="register">Регистрация</button>
+                </div>
+                <form id="login-form">
+                    <label>Email<input type="email" id="email" required></label>
+                    <label>Пароль<input type="password" id="password" required></label>
+                    <div class="error" id="login-error"></div>
+                    <button type="submit" class="btn btn-primary">Войти</button>
+                </form>
+                <form id="register-form" style="display:none">
+                    <label>Имя<input type="text" id="name" required></label>
+                    <label>Email<input type="email" id="reg-email" required></label>
+                    <label>Пароль<input type="password" id="reg-password" required></label>
+                    <div class="error" id="reg-error"></div>
+                    <div class="success" id="reg-success"></div>
+                    <button type="submit" class="btn btn-primary">Регистрация</button>
+                </form>
+            </div>
+        </div>
+    </main>
+    <script>
+    document.querySelectorAll('.tabs button').forEach(t => t.onclick = () => {
+        document.querySelectorAll('.tabs button').forEach(x => x.classList.remove('active'));
+        t.classList.add('active');
+        document.getElementById('login-form').style.display = t.dataset.tab === 'login' ? 'block' : 'none';
+        document.getElementById('register-form').style.display = t.dataset.tab === 'register' ? 'block' : 'none';
+    });
+    document.getElementById('login-form').onsubmit = async e => {
+        e.preventDefault();
+        const r = await fetch('/api/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: document.getElementById('email').value, password: document.getElementById('password').value }) }).then(r => r.json());
+        r.success ? window.location.href = '/' : (document.getElementById('login-error').textContent = r.message, document.getElementById('login-error').style.display = 'block');
+    };
+    document.getElementById('register-form').onsubmit = async e => {
+        e.preventDefault();
+        const r = await fetch('/api/register', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: document.getElementById('name').value, email: document.getElementById('reg-email').value, password: document.getElementById('reg-password').value }) }).then(r => r.json());
+        r.success ? (document.getElementById('reg-success').textContent = r.message, document.getElementById('reg-success').style.display = 'block', setTimeout(() => document.querySelector('[data-tab="login"]').click(), 1500)) : (document.getElementById('reg-error').textContent = r.message, document.getElementById('reg-error').style.display = 'block');
+    };
+    document.getElementById('logout-btn').onclick = async () => { await fetch('/api/logout', { method: 'POST' }); window.location.href = '/'; };
+    (async () => {
+        const u = (await fetch('/api/user').then(r => r.json())).user;
+        if (u) {
+            document.getElementById('auth-forms').style.display = 'none';
+            document.getElementById('user-info').style.display = 'block';
+            document.getElementById('user-name').textContent = u.name;
+            document.getElementById('user-email').textContent = u.email;
+            document.getElementById('user-role').textContent = u.role === 'admin' ? 'Админ' : 'Пользователь';
+            if (u.role === 'admin') document.getElementById('admin-link').style.display = 'inline-flex';
+        }
+    })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Корзина - TechStore</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <a href="/" class="logo"><div class="logo-icon">⚡</div>TechStore</a>
+            <nav class="nav">
+                <a href="/">Главная</a>
+                <a href="/products">Каталог</a>
+                <a href="/cart">🛒 <span id="cart-count">0</span></a>
+                <div id="user-menu"><a href="/login" class="btn-login">Войти</a></div>
+            </nav>
+        </div>
+    </header>
+    <main class="page">
+        <div class="container">
+            <h1>Корзина</h1>
+            <div class="cart-content">
+                <div id="cart-empty"><h2>Корзина пуста</h2><p>Добавьте товары</p><a href="/products" class="btn btn-primary">В каталог</a></div>
+                <div id="cart-items"></div>
+                <div id="cart-summary">
+                    <div>Товаров: <span id="cart-items-count">0</span></div>
+                    <div class="total">К оплате: <span id="cart-total">0 ₽</span></div>
+                    <button class="btn btn-primary" id="checkout-btn">Оформить заказ</button>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer class="footer">
+        <div class="container"><p>© 2026 TechStore</p></div>
+    </footer>
+    <script src="/js/main.js"></script>
+</body>
+</html>

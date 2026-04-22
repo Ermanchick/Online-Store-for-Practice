@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог - TechStore</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <a href="/" class="logo"><div class="logo-icon">⚡</div>TechStore</a>
+            <nav class="nav">
+                <a href="/">Главная</a>
+                <a href="/products">Каталог</a>
+                <a href="/cart">🛒 <span id="cart-count">0</span></a>
+                <div id="user-menu"><a href="/login" class="btn-login">Войти</a></div>
+            </nav>
+        </div>
+    </header>
+    <main class="page">
+        <div class="container">
+            <h1>Каталог</h1>
+            <div class="filters">
+                <label><input type="checkbox" class="category-filter" value="laptop"> Ноутбуки</label>
+                <label><input type="checkbox" class="category-filter" value="phone"> Смартфоны</label>
+                <label><input type="checkbox" class="category-filter" value="tv"> Телевизоры</label>
+                <label><input type="checkbox" class="category-filter" value="audio"> Наушники</label>
+                <label><input type="checkbox" class="category-filter" value="pc"> Компьютеры</label>
+                <label><input type="checkbox" class="category-filter" value="tablet"> Планшеты</label>
+                <label><input type="checkbox" class="category-filter" value="watch"> Часы</label>
+                <label><input type="checkbox" class="category-filter" value="camera"> Фотоаппараты</label>
+            </div>
+            <div class="grid" id="products-grid"></div>
+        </div>
+    </main>
+    <footer class="footer">
+        <div class="container"><p>© 2026 TechStore</p></div>
+    </footer>
+    <div class="modal" id="product-modal">
+        <div class="modal-content">
+            <button class="close" id="product-modal-close">&times;</button>
+            <img id="modal-image">
+            <div>
+                <div id="modal-category"></div>
+                <h2 id="modal-name"></h2>
+                <div id="modal-price"></div>
+                <p id="modal-description"></p>
+                <button class="btn btn-primary" id="modal-add-btn">В корзину</button>
+            </div>
+        </div>
+    </div>
+    <script src="/js/main.js"></script>
+</body>
+</html>

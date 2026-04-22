@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админ - TechStore</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+    .admin-tabs { display: flex; gap: 8px; margin-bottom: 24px; }
+    .admin-tab { padding: 10px 20px; background: #f3f4f6; border: none; border-radius: 8px; cursor: pointer; }
+    .admin-tab.active { background: #2563eb; color: white; }
+    .admin-section { display: none; }
+    .admin-section.active { display: block; }
+    .admin-section table { width: 100%; border-collapse: collapse; }
+    .admin-section th, .admin-section td { padding: 12px; text-align: left; border-bottom: 1px solid #e5e7eb; }
+    .admin-section th { background: #f9fafb; font-size: 12px; text-transform: uppercase; color: #6b7280; }
+    .admin-section img { width: 48px; height: 48px; object-fit: cover; border-radius: 6px; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <a href="/" class="logo"><div class="logo-icon">⚡</div>TechStore <span style="color:#ef4444">ADMIN</span></a>
+            <nav class="nav">
+                <a href="/">Главная</a>
+                <a href="/products">Каталог</a>
+                <a href="/cart">Корзина</a>
+                <span>Панель</span>
+                <button id="logout-btn">Выйти</button>
+            </nav>
+        </div>
+    </header>
+    <main class="page">
+        <div class="container">
+            <h1>Админ-панель</h1>
+            <div class="admin-tabs">
+                <button class="admin-tab active" data-tab="products">Товары</button>
+                <button class="admin-tab" data-tab="orders">Заказы</button>
+            </div>
+            <div class="admin-section active" id="products-section">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+                    <h2>Товары</h2>
+                    <button class="btn btn-primary" id="add-btn">+ Добавить</button>
+                </div>
+                <table><thead><tr><th>#</th><th></th><th>Название</th><th>Цена</th><th>Категория</th><th></th></tr></thead><tbody id="products-tbody"></tbody></table>
+            </div>
+            <div class="admin-section" id="orders-section">
+                <h2>Заказы</h2>
+                <table><thead><tr><th>#</th><th>Пользователь</th><th>Сумма</th><th>Статус</th><th>Дата</th></tr></thead><tbody id="orders-tbody"></tbody></table>
+            </div>
+        </div>
+    </main>
+    <div class="modal" id="product-modal">
+        <div class="modal-content">
+            <h3 id="modal-title">Добавить товар</h3>
+            <button class="close" id="modal-close">&times;</button>
+            <form id="product-form">
+                <input type="hidden" id="product-id">
+                <label>Название<input type="text" id="product-name" required></label>
+                <label>Цена<input type="number" id="product-price" required></label>
+                <label>Изображение<input type="url" id="product-image"></label>
+                <label>Категория<select id="product-category">
+                    <option value="laptop">Ноутбуки</option><option value="phone">Смартфоны</option><option value="tv">Телевизоры</option>
+                    <option value="audio">Наушники</option><option value="pc">Компьютеры</option><option value="tablet">Планшеты</option>
+                    <option value="watch">Часы</option><option value="camera">Фотоаппараты</option>
+                </select></label>
+                <label>Описание<textarea id="product-description"></textarea></label>
+                <div style="display:flex;gap:12px;justify-content:flex-end;margin-top:16px">
+                    <button type="button" class="btn btn-outline" id="modal-cancel">Отмена</button>
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="/js/admin.js"></script>
+    <script>
+    document.getElementById('logout-btn').onclick = async () => { await fetch('/api/logout', {method:'POST'}); window.location.href = '/'; };
+    document.querySelectorAll('.admin-tab').forEach(t => t.onclick = () => {
+        document.querySelectorAll('.admin-tab').forEach(x => x.classList.remove('active'));
+        document.querySelectorAll('.admin-section').forEach(x => x.classList.remove('active'));
+        t.classList.add('active');
+        document.getElementById(t.dataset.tab + '-section').classList.add('active');
+    });
+    document.getElementById('add-btn').onclick = () => { document.getElementById('product-form').reset(); document.getElementById('product-id').value = ''; document.getElementById('modal-title').textContent = 'Добавить товар'; document.getElementById('product-modal').classList.add('active'); };
+    document.getElementById('modal-close').onclick = () => document.getElementById('product-modal').classList.remove('active');
+    document.getElementById('modal-cancel').onclick = () => document.getElementById('product-modal').classList.remove('active');
+    </script>
+</body>
+</html>
